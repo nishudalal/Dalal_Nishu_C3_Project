@@ -14,6 +14,9 @@ class RestaurantTest {
 
     public void addTestingRestaurant() {
         restaurant = service.addRestaurant("Nishu's Upgrad Food Point", "Gurugram", LocalTime.parse("08:15:00"), LocalTime.parse("11:45:00"));
+        restaurant.addToMenu("sprite", 80);
+        restaurant.addToMenu("sandwich", 70);
+        restaurant.addToMenu("pizza", 170);
         mockedRest = Mockito.spy(restaurant);
     }
     //REFACTOR ALL THE REPEATED LINES OF CODE
@@ -76,4 +79,10 @@ class RestaurantTest {
                 ()->restaurant.removeFromMenu("French fries"));
     }
     //<<<<<<<<<<<<<<<<<<<<<<<MENU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    @Test
+    public void total_order_value_should_be_150_when_added_only_sandwich_and_sprite (){
+        addTestingRestaurant();
+        List<String> selectedItems = Arrays.asList("sandwich", "sprite");
+        assertEquals(restaurant.getOrderValue(selectedItems), 150);
+    }
 }
